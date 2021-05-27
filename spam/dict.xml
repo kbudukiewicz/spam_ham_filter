@@ -1,0 +1,31 @@
+import re
+
+fileToRead = 'tekst.txt'
+delimiterInFile = [',', ';']
+
+
+def validateEmail(strEmail):
+    # .* Zero or more characters of any type.
+    if re.match(r"^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$", strEmail):
+        return True
+    return False
+
+
+listEmail = []
+file = open(fileToRead, 'r')
+listLine = file.readlines()
+for itemLine in listLine:
+    item = str(itemLine)
+    for delimeter in delimiterInFile:
+        item = item.replace(str(delimeter), ' ')
+
+    wordList = item.split()
+    for word in wordList:
+        if (validateEmail(word)):
+            listEmail.append(word)
+if listEmail:
+    uniqEmail = set(listEmail)
+    print(len(uniqEmail), "emails collected!")
+    print(uniqEmail)
+else:
+    print("No email found.")
